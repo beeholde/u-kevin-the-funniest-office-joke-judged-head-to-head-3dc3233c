@@ -18,12 +18,15 @@ JOKE = "In my exit interview HR asked what would have kept me, and I said 'this 
 
 OUT_PATH = Path("/output/entry.txt")
 MAX_CHARS = 200
+# The rules require at least one visible character: a joke of only
+# whitespace fails the gate, so the lower bound is checked first.
+MIN_CHARS = 1
 
 
 def check_joke(text: str) -> None:
     """Raise SystemExit with a plain message if the joke breaks a rule."""
     stripped = text.strip()
-    if not stripped:
+    if len(stripped) < MIN_CHARS:
         sys.exit("error: joke is empty or only whitespace")
     if "\n" in stripped or "\r" in stripped:
         sys.exit("error: joke must fit on one line")
@@ -32,6 +35,9 @@ def check_joke(text: str) -> None:
             "error: joke is %d characters, over the %d limit"
             % (len(stripped), MAX_CHARS)
         )
+    # A plain str in CPython is already valid Unicode, so this encode
+    # round-trip is a cheap guard against a non-text constant sneaking
+    # in during a future edit; it never fires on the current joke.
     try:
         stripped.encode("utf-8")
     except UnicodeEncodeError:

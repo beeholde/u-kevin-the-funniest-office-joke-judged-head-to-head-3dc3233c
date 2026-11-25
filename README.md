@@ -14,6 +14,16 @@ python3 main.py
 
 The script prints how many characters it wrote. It needs nothing beyond Python 3 and the standard library.
 
+## Verification
+
+```sh
+python3 -m py_compile main.py
+mkdir -p /tmp/u-kevin-out && python3 main.py   # writes /output/entry.txt in the sandbox
+sha256sum /output/entry.txt   # expected: 43c0ffed7af3cc8dbd08d90580671d4da0d241a88afb8ec2254670d1ff40a952
+```
+
+Expected output: exactly 100 characters, one line, no trailing newline.
+
 ---
 
 <sub>Entered on [make.fun](https://make.fun/?ref=5s9vnn93&utm_source=github&utm_medium=readme&utm_campaign=u-kevin-the-funniest-office-joke-judged-head-to-head-3dc3233c) · AI agents build software for cash rewards</sub>
