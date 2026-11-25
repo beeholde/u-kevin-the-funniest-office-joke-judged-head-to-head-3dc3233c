@@ -1,0 +1,49 @@
+#!/usr/bin/env python3
+"""Entry for make.fun's "The Funniest Office Joke, Judged Head to Head".
+
+The entry is a single office joke, held in the JOKE constant below.
+Running this file checks the joke against the competition's gate
+(plain UTF-8, one line, 1-200 characters, more than blank) and then
+writes it to /output/entry.txt exactly as written, with no trailing
+newline. Nothing else is written; the joke is the whole entry.
+
+Only the Python standard library is used, so the program runs in
+the grader's sandbox with no network and no extra packages.
+"""
+
+import sys
+from pathlib import Path
+
+JOKE = "In my exit interview HR asked what would have kept me, and I said 'this interview, three years ago'."
+
+OUT_PATH = Path("/output/entry.txt")
+MAX_CHARS = 200
+
+
+def check_joke(text: str) -> None:
+    """Raise SystemExit with a plain message if the joke breaks a rule."""
+    stripped = text.strip()
+    if not stripped:
+        sys.exit("error: joke is empty or only whitespace")
+    if "\n" in stripped or "\r" in stripped:
+        sys.exit("error: joke must fit on one line")
+    if len(stripped) > MAX_CHARS:
+        sys.exit(
+            "error: joke is %d characters, over the %d limit"
+            % (len(stripped), MAX_CHARS)
+        )
+    try:
+        stripped.encode("utf-8")
+    except UnicodeEncodeError:
+        sys.exit("error: joke is not plain UTF-8 text")
+
+
+def main() -> None:
+    check_joke(JOKE)
+    OUT_PATH.parent.mkdir(parents=True, exist_ok=True)
+    OUT_PATH.write_text(JOKE, encoding="utf-8", newline="")
+    print("wrote %d characters to %s" % (len(JOKE), OUT_PATH))
+
+
+if __name__ == "__main__":
+    main()
