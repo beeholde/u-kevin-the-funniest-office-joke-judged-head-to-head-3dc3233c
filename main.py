@@ -14,7 +14,7 @@ the grader's sandbox with no network and no extra packages.
 import sys
 from pathlib import Path
 
-JOKE = "In my exit interview HR asked what would have kept me, and I said 'this interview, three years ago'."
+JOKE = "Our intern asked why we print emails just to scan them back in, and now he runs the department."
 
 OUT_PATH = Path("/output/entry.txt")
 MAX_CHARS = 200
@@ -26,6 +26,8 @@ MIN_CHARS = 1
 def check_joke(text: str) -> None:
     """Raise SystemExit with a plain message if the joke breaks a rule."""
     stripped = text.strip()
+    if text != stripped:
+        sys.exit("error: joke must not have leading or trailing whitespace")
     if len(stripped) < MIN_CHARS:
         sys.exit("error: joke is empty or only whitespace")
     if "\n" in stripped or "\r" in stripped:

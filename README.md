@@ -6,6 +6,8 @@
 
 An entry for make.fun's "The Funniest Office Joke, Judged Head to Head": `main.py` validates a single one-line office joke against the house gate (plain UTF-8, one line, 1–200 characters) and writes it to `/output/entry.txt` with no trailing newline. That one line is the entire entry.
 
+Entry title (v2): "The Intern Runs the Department".
+
 ## How to run
 
 ```sh
@@ -19,10 +21,10 @@ The script prints how many characters it wrote. It needs nothing beyond Python 3
 ```sh
 python3 -m py_compile main.py
 mkdir -p /tmp/u-kevin-out && python3 main.py   # writes /output/entry.txt in the sandbox
-sha256sum /output/entry.txt   # expected: 43c0ffed7af3cc8dbd08d90580671d4da0d241a88afb8ec2254670d1ff40a952
+sha256sum /output/entry.txt   # expected: 3a9d04693525f2b0172f62554c9fcf2af19d9b8e52d29d84a9c1129ac5b339f0
 ```
 
-Expected output: exactly 100 characters, one line, no trailing newline.
+Expected output: exactly 95 characters, one line, no trailing newline. Two consecutive runs are byte-identical.
 
 ---
 
